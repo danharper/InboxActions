@@ -1,5 +1,6 @@
 <?php namespace DanHarper\InboxActions;
 
+use DanHarper\InboxActions\Actions\ConfirmAction;
 use DanHarper\InboxActions\Actions\RSVP;
 use DanHarper\InboxActions\Actions\ViewAction;
 use DanHarper\InboxActions\Renderers\JsonLdRenderer;
@@ -28,6 +29,11 @@ class InboxAction {
 	public static function RSVP($name)
 	{
 		return static::init(new RSVP($name));
+	}
+
+	public static function ConfirmAction($name, $url = null)
+	{
+		return static::init(new ConfirmAction($name, $url));
 	}
 
 	private static function init(ActionInterface $action)

@@ -35,4 +35,10 @@ trait ActionTrait {
 	 */
 	abstract protected function getSchema();
 
+	protected function findOrMake($source, $targetKey, $classToMake)
+	{
+		if ( ! $source->$targetKey) $source->$targetKey = new $classToMake;
+		return $source->$targetKey;
+	}
+
 } 

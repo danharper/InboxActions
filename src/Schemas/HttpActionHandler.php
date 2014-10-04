@@ -18,6 +18,11 @@ class HttpActionHandler implements SchemaInterface {
 	public $url;
 
 	/**
+	 * @var bool|null
+	 */
+	public $requiresConfirmation;
+
+	/**
 	 * @return string
 	 */
 	public function getType()
@@ -25,7 +30,7 @@ class HttpActionHandler implements SchemaInterface {
 		return 'HttpActionHandler';
 	}
 
-	public function __construct($method, $url)
+	public function __construct($method = 'GET', $url = null)
 	{
 		$this->method($method);
 		$this->url = $url;

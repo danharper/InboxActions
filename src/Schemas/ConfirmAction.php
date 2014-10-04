@@ -2,24 +2,24 @@
 
 use DanHarper\InboxActions\SchemaInterface;
 
-class ViewAction implements SchemaInterface {
+class ConfirmAction implements SchemaInterface {
 
 	/**
-	 * @var string
+	 * @var string|null
 	 */
 	public $name;
 
 	/**
-	 * @var string
+	 * @var HttpActionHandler
 	 */
-	public $url;
+	public $handler;
 
 	/**
 	 * @return string
 	 */
 	public function getType()
 	{
-		return 'ViewAction';
+		return 'ConfirmAction';
 	}
 
 }

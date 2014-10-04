@@ -1,5 +1,6 @@
 <?php namespace DanHarper\InboxActions\Schemas;
 
+use DanHarper\InboxActions\ActionInterface;
 use DanHarper\InboxActions\SchemaInterface;
 
 class EmailMessage implements SchemaInterface {
@@ -10,7 +11,7 @@ class EmailMessage implements SchemaInterface {
 	public $description;
 
 	/**
-	 * @var ViewAction|null
+	 * @var ActionInterface|null
 	 */
 	public $action;
 

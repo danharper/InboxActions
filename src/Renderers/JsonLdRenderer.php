@@ -42,7 +42,7 @@ class JsonLdRenderer implements RendererInterface {
 
 		foreach (get_object_vars($embed) as $field => $value)
 		{
-			if ( ! $value) continue;
+			if (is_null($value)) continue;
 
 			$output[$field] = $this->process($value);
 		}

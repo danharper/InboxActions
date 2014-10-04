@@ -16,10 +16,11 @@ To get started, just pull it down with composer (`danharper/inbox-actions`).
 
 So far, the following "Actions" from Gmail are supported:
 
-* [View Action](#view-action)
+* [View](#view)
 * [RSVP](#rsvp)
+* [Confirm](#confirm)
 
-### View Action
+### View
 
 ```php
 <?php
@@ -192,3 +193,49 @@ InboxAction::RSVP('Taco Night')
 ![](http://danharper.me/inbox-actions/rsvp.png)
 ![](http://danharper.me/inbox-actions/rsvp-inline.png)
 ![](http://danharper.me/inbox-actions/rsvp-inbox.png)
+
+### Confirm
+
+```php
+<?php
+use DanHarper\InboxActions\InboxAction;
+
+InboxAction::ConfirmAction('Approve Expense', 'http://acme.com');
+
+// Also supports publisher details
+InboxAction::ConfirmAction('Approve Expense', 'http://acme.com')
+	->publisher('Acme', 'http://acme');
+
+// Use POST for URL handler
+InboxAction::ConfirmAction('Approve Expense')->handler('http://acme.com', 'POST');
+
+// Require additional confirmation from user after clicking button
+InboxAction::ConfirmAction('Approve Expense', 'http://acme')
+	->requireConfirmation();
+```
+
+Example output:
+
+```html
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "EmailMessage",
+    "action": {
+        "@type": "ConfirmAction",
+        "name": "Approve Expense",
+        "handler": {
+            "@type": "HttpActionHandler",
+            "method": "http://schema.org/HttpRequestMethod/GET",
+            "url": "http://acme.com/?approve=29394&auth=28usj92k",
+            "requiresConfirmation": true
+        }
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Acme Incorporated",
+        "url": "http://acme.org"
+    }
+}
+</script>
+```

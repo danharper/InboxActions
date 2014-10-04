@@ -4,6 +4,7 @@ use DanHarper\InboxActions\ActionInterface;
 use DanHarper\InboxActions\ActionTrait;
 use DanHarper\InboxActions\SchemaInterface;
 use DanHarper\InboxActions\Schemas\EmailMessage;
+use DanHarper\InboxActions\Schemas\HttpActionHandler;
 use DanHarper\InboxActions\Schemas\Organization;
 use DanHarper\InboxActions\Schemas\ViewAction as ViewActionSchema;
 
@@ -16,45 +17,51 @@ class ViewAction implements ActionInterface {
 	 */
 	private $emailMessage;
 
-	public function __construct($name = null, $url = null)
+	public function __construct($name, $url = null)
 	{
-		$this->action($name, $url);
+		$this->named($name)->handler($url);
 	}
 
-	public function action($name, $url)
+	public function named($name)
 	{
-		$this->getAction()->set($name, $url);
+		$this->getAction()->name = $name;
+		return $this;
+	}
 
+	public function handler($url)
+	{
+		$this->getAction()->url = $url;
 		return $this;
 	}
 
 	public function publisher($name, $url)
 	{
 		$this->getPublisher()->set($name, $url);
-
 		return $this;
 	}
 
-	public function getAction()
+	/**
+	 * @return ViewActionSchema
+	 */
+	protected function getAction()
 	{
-		$email = $this->getEmailMessage();
-
-		if ( ! $email->action) $email->action = new ViewActionSchema;
-		return $email->action;
+		return $this->findOrMake($this->getEmailMessage(), 'action', ViewActionSchema::class);
 	}
 
-	public function getPublisher()
+	/**
+	 * @return EmailMessage
+	 */
+	protected function getEmailMessage()
 	{
-		$email = $this->getEmailMessage();
-
-		if ( ! $email->publisher) $email->publisher = new Organization;
-		return $email->publisher;
+		return $this->findOrMake($this, 'emailMessage', EmailMessage::class);
 	}
 
-	public function getEmailMessage()
+	/**
+	 * @return Organization
+	 */
+	protected function getPublisher()
 	{
-		if ( ! $this->emailMessage) $this->emailMessage = new EmailMessage;
-		return $this->emailMessage;
+		return $this->findOrMake($this->getEmailMessage(), 'publisher', Organization::class);
 	}
 
 	/**
