@@ -1,0 +1,17 @@
+{
+	"name": "danharper/inbox-actions",
+	"description": "Inbox actions, for Gmail and any other compatible email client",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Dan Harper",
+			"email": "intouch@danharper.me"
+		}
+	],
+	"require": {},
+	"autoload": {
+		"psr-4": {
+			"DanHarper\\InboxActions\\": "src"
+		}
+	}
+}
