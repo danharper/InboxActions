@@ -89,9 +89,9 @@ InboxAction::RSVP('Taco Night')
 	->address(new PostalAddress(
 		'Google', '24 Willie Mays Plaza', 'San Francisco', 'CA', '94107', 'USA'
 	))
-	->replyYes('http://acme')
-	->replyNo('http://acme')
-	->replyMaybe('http://acme');
+	->yes('http://acme')
+	->no('http://acme')
+	->maybe('http://acme');
 ```
 
 When `echo`'d, results in:
@@ -178,23 +178,25 @@ InboxAction::RSVP('Taco Night')
 	})
 	
 	// you MUST specify both "yes" and "no" response URLs
-	->replyYes('http://acme?response=yes')
-	->replyNo('http://acme?response=no')
+	->yes('http://acme?response=yes')
+	->no('http://acme?response=no')
 	
 	// you MAY specify a "maybe" response URL
-	->replyMaybe('http://acme?response=maybe')
+	->maybe('http://acme?response=maybe')
 	
 	// by default, responses will be GET requests
 	// you can be explicit, or use a POST request instead:
-	->replyYes('GET', 'http://acme')
-	->replyYes('POST', 'http://acme');
+	->yes('http://acme', 'GET')
+	->yes('http://acme', 'POST');
 ```
 
 ![](http://danharper.me/inbox-actions/rsvp.png)
 ![](http://danharper.me/inbox-actions/rsvp-inline.png)
 ![](http://danharper.me/inbox-actions/rsvp-inbox.png)
 
-### Confirm
+### Confirm / Save
+
+Confirm actions and save actions are near-enough identical. You can swap out `ConfirmAction` with `SaveAction` below for semantics.
 
 ```php
 <?php
