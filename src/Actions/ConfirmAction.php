@@ -87,28 +87,4 @@ class ConfirmAction implements ActionInterface {
 		return $this->findOrMake($this->getEmailMessage(), 'publisher', Organization::class);
 	}
 
-	/**
-	 * @param $method
-	 * @param $url
-	 * @return HttpActionHandler
-	 */
-	protected function makeHttpHandler($method, $url)
-	{
-		if ($method instanceof HttpActionHandler)
-		{
-			$httpAction = $method;
-		}
-		else if ($method && $url)
-		{
-			$httpAction = new HttpActionHandler($method, $url);
-		}
-		else
-		{
-			list($method, $url) = ['GET', $method];
-			$httpAction = new HttpActionHandler($method, $url);
-		}
-
-		return $httpAction;
-	}
-
 }

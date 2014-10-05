@@ -123,7 +123,7 @@ OUT;
     public function testRsvpReplies()
     {
         $actual = InboxAction::RSVP('Taco Night')
-            ->replyYes('get', 'http://yes')->replyNo('http://no')->replyMaybe('post', 'http://maybe');
+            ->yes('http://yes', 'get')->no('http://no')->maybe('http://maybe', 'post');
 
         $expected = <<<OUT
 <script type="application/ld+json">
@@ -172,8 +172,8 @@ OUT;
         $actual = InboxAction::RSVP('Taco Night')
             ->at(new DateTime('2015-04-18 15:30'), new DateTime('2015-04-18 16:30'))
             ->address(new PostalAddress('Google', '24 Willie Mays Plaza', 'San Francisco', 'CA', '94107', 'USA'))
-            ->replyYes('POST', 'http://foo?y')
-            ->replyNo('GET', 'http://xx');
+            ->yes('http://foo?y', 'POST')
+            ->no('http://xx', 'get');
 
         $expected = <<<OUT
 <script type="application/ld+json">

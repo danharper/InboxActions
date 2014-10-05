@@ -2,6 +2,7 @@
 
 use DanHarper\InboxActions\Actions\ConfirmAction;
 use DanHarper\InboxActions\Actions\RSVP;
+use DanHarper\InboxActions\Actions\SaveAction;
 use DanHarper\InboxActions\Actions\ViewAction;
 use DanHarper\InboxActions\Renderers\JsonLdRenderer;
 
@@ -40,6 +41,17 @@ class InboxAction {
 	public static function ConfirmAction($name, $url, $method = 'GET')
 	{
 		return static::init(new ConfirmAction($name, $url, $method));
+	}
+
+	/**
+	 * @param $name
+	 * @param $url
+	 * @param string $method
+	 * @return ConfirmAction
+	 */
+	public static function SaveAction($name, $url, $method = 'GET')
+	{
+		return static::init(new SaveAction($name, $url, $method));
 	}
 
 	private static function init(ActionInterface $action)

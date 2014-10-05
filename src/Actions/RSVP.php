@@ -68,78 +68,45 @@ class RSVP implements ActionInterface {
 		return $this->start($start)->finish($finish);
 	}
 
-	public function replyYes($method, $url = null)
+	public function yes($url, $method = 'GET')
 	{
-		return $this->reply(RsvpAction::YES, $method, $url);
+		return $this->reply(RsvpAction::YES, $url, $method);
 	}
 
-	public function replyNo($method, $url = null)
+	public function no($url, $method = 'GET')
 	{
-		return $this->reply(RsvpAction::NO, $method, $url);
+		return $this->reply(RsvpAction::NO, $url, $method);
 	}
 
-	public function replyMaybe($method, $url = null)
+	public function maybe($url, $method = 'GET')
 	{
-		return $this->reply(RsvpAction::MAYBE, $method, $url);
+		return $this->reply(RsvpAction::MAYBE, $url, $method);
 	}
 
-	public function reply($attendance, $method, $url = null)
+	private function reply($attendance, $url, $method)
 	{
-		$this->getActions()[] = new RsvpAction($attendance, $this->makeHttpAction($method, $url));
+		$this->getActions()[] = new RsvpAction($attendance, new HttpActionHandler($method, $url));
 		return $this;
-	}
-
-	/**
-	 * @param $method
-	 * @param $url
-	 * @return HttpActionHandler
-	 */
-	protected function makeHttpAction($method, $url)
-	{
-		if ($method instanceof HttpActionHandler)
-		{
-			$httpAction = $method;
-		}
-		else if ($method && $url)
-		{
-			$httpAction = new HttpActionHandler($method, $url);
-		}
-		else
-		{
-			list($method, $url) = ['GET', $method];
-			$httpAction = new HttpActionHandler($method, $url);
-		}
-
-		return $httpAction;
 	}
 
 	private function getEvent()
 	{
-		if ( ! $this->event) $this->event = new Event;
-		return $this->event;
+		return $this->findOrMake($this, 'event', Event::class);
 	}
 
 	private function getPlace()
 	{
-		$event = $this->getEvent();
-
-		if ( ! $event->location) $event->location = new Place;
-		return $event->location;
+		return $this->findOrMake($this->getEvent(), 'location', Place::class);
 	}
 
 	private function getAddress()
 	{
-		$location = $this->getPlace();
-
-		if ( ! $location->address) $location->address = new PostalAddress;
-		return $location->address;
+		return $this->findOrMake($this->getPlace(), 'address', PostalAddress::class);
 	}
 
 	private function getActions()
 	{
-		$event = $this->getEvent();
-		if ( ! $event->action) $event->action = new Collection;
-		return $event->action;
+		return $this->findOrMake($this->getEvent(), 'action', Collection::class);
 	}
 
 	/**
