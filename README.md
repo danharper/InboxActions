@@ -18,7 +18,7 @@ So far, the following "Actions" from Gmail are supported:
 
 * [View](#view)
 * [RSVP](#rsvp)
-* [Confirm](#confirm)
+* [Confirm / Save](#confirm--save)
 
 ### View
 
