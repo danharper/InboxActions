@@ -31,9 +31,15 @@ class InboxAction {
 		return static::init(new RSVP($name));
 	}
 
-	public static function ConfirmAction($name, $url = null)
+	/**
+	 * @param $name
+	 * @param $url
+	 * @param string $method
+	 * @return ConfirmAction
+	 */
+	public static function ConfirmAction($name, $url, $method = 'GET')
 	{
-		return static::init(new ConfirmAction($name, $url));
+		return static::init(new ConfirmAction($name, $url, $method));
 	}
 
 	private static function init(ActionInterface $action)

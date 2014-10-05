@@ -17,7 +17,7 @@ class ViewAction implements ActionInterface {
 	 */
 	private $emailMessage;
 
-	public function __construct($name, $url = null)
+	public function __construct($name, $url)
 	{
 		$this->named($name)->handler($url);
 	}

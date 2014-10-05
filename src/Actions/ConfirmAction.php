@@ -13,9 +13,9 @@ class ConfirmAction implements ActionInterface {
 
 	private $emailMessage;
 
-	public function __construct($name, $url = null)
+	public function __construct($name, $url, $method = 'GET')
 	{
-		$this->named($name)->handler($url);
+		$this->named($name)->handler($url)->method($method);
 	}
 
 	public function named($name)
@@ -24,11 +24,15 @@ class ConfirmAction implements ActionInterface {
 		return $this;
 	}
 
-	public function handler($url, $method = null)
+	public function handler($url)
 	{
-		$handler = $this->getActionHandler();
-		$handler->url = $url;
-		if ($method) $handler->method($method);
+		$this->getActionHandler()->url = $url;
+		return $this;
+	}
+
+	public function method($method)
+	{
+		$this->getActionHandler()->method($method);
 		return $this;
 	}
 
