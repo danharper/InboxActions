@@ -2,14 +2,8 @@
 
 A small library to generate Schema.org markup to embed in emails to achieve ["Actions in Inbox"](https://developers.google.com/gmail/actions/).
 
-To get started, just pull it down with composer (`danharper/inbox-actions`).
-
-```json
-{
-	"require": {
-		"danharper/inbox-actions": "dev-master"
-	}
-}
+```
+composer require danharper/inbox-actions
 ```
 
 ## Usage
